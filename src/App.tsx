@@ -7,8 +7,13 @@ import { TodoItem } from "./todo-types";
 
 function App() {
   const [todoList, setTodoList] = useState<TodoItem[]>(INIT_TODO_LIST);
+
   function addItem(item: TodoItem): void {
     setTodoList([...todoList, item]);
+  }
+
+  function deleteItem(id: number): void {
+    setTodoList(todoList.filter((todo: TodoItem) => todo.id !== id));
   }
   return (
     <section>
@@ -17,7 +22,7 @@ function App() {
           <TodoForm onSubmit={addItem} />
         </div>
 
-        <TodoList todoList={todoList} />
+        <TodoList todoList={todoList} onDelete={deleteItem} />
       </div>
     </section>
   );
