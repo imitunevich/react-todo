@@ -6,7 +6,7 @@ export function TodoForm(p: {
   onSubmit: (item: TodoItem) => void;
 }) {
   const [formData, setFormData] = useState<TodoItem>(
-    p.item || { id: Date.now(), name: "", content: "" },
+    p.item || { id: Date.now(), name: "", content: "", isDone: false },
   );
 
   function setValue(
@@ -19,7 +19,7 @@ export function TodoForm(p: {
     p.onSubmit({ ...formData, id: Date.now() });
 
     //clear form;
-    setFormData({ id: Date.now(), name: "", content: "" });
+    setFormData({ id: Date.now(), name: "", content: "", isDone: false });
   }
 
   return (

@@ -15,6 +15,17 @@ function App() {
   function deleteItem(id: number): void {
     setTodoList(todoList.filter((todo: TodoItem) => todo.id !== id));
   }
+
+  function updateItem(item: TodoItem): void {
+    const itemToUpdateIndex: number = todoList.findIndex(
+      (todo: TodoItem) => todo.id == item.id,
+    );
+    const itemToUpdate: TodoItem = todoList[itemToUpdateIndex];
+    const updatedTodoList = [...todoList];
+    updatedTodoList[itemToUpdateIndex] = { ...itemToUpdate, ...item };
+    setTodoList(updatedTodoList);
+  }
+
   return (
     <section>
       <div className="container">
@@ -22,7 +33,11 @@ function App() {
           <TodoForm onSubmit={addItem} />
         </div>
 
-        <TodoList todoList={todoList} onDelete={deleteItem} />
+        <TodoList
+          todoList={todoList}
+          onDelete={deleteItem}
+          updateItem={updateItem}
+        />
       </div>
     </section>
   );
