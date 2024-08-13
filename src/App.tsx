@@ -15,15 +15,12 @@ function App() {
   function deleteItem(id: number): void {
     setTodoList(todoList.filter((todo: TodoItem) => todo.id !== id));
   }
-
   function updateItem(item: TodoItem): void {
-    const itemToUpdateIndex: number = todoList.findIndex(
-      (todo: TodoItem) => todo.id == item.id,
+    setTodoList((prevState: TodoItem[]) =>
+      prevState.map((todoItem: TodoItem) =>
+        todoItem.id === item.id ? { ...todoItem, ...item } : todoItem,
+      ),
     );
-    const itemToUpdate: TodoItem = todoList[itemToUpdateIndex];
-    const updatedTodoList = [...todoList];
-    updatedTodoList[itemToUpdateIndex] = { ...itemToUpdate, ...item };
-    setTodoList(updatedTodoList);
   }
 
   return (

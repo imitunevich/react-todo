@@ -1,17 +1,19 @@
 import { TodoItem } from "../../todo-types";
 import { TodoCard } from "../TodoCard/TodoCard";
 
-export function TodoList(p: {
+type Props = {
   todoList: TodoItem[];
   onDelete: (todoId: number) => void;
   updateItem: (item: TodoItem) => void;
-}) {
-  const renderTodoList: React.ReactNode = p.todoList.map((item: TodoItem) => (
+};
+
+export function TodoList({ todoList, onDelete, updateItem }: Props) {
+  const renderTodoList: React.ReactNode = todoList.map((item: TodoItem) => (
     <div key={item.id} className="col-md-6 col-lg-4 mb-3">
       <TodoCard
         item={item}
-        onDelete={() => p.onDelete(item.id)}
-        updateItem={p.updateItem}
+        onDelete={() => onDelete(item.id)}
+        updateItem={updateItem}
       />
     </div>
   ));
