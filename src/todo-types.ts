@@ -2,5 +2,11 @@ export interface TodoItem {
   id: number;
   name: string;
   content: string;
-  isDone: boolean;
+  status: TodoStatus;
+}
+
+export enum TodoStatus {
+  Todo,
+  Done,
+  OnHold,
 }

@@ -1,4 +1,4 @@
-import { TodoItem } from "../../todo-types";
+import { TodoItem, TodoStatus } from "../../todo-types";
 import { ChangeEvent, useState } from "react";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 
 export function TodoForm({ item, onSubmit }: Props) {
   const [formData, setFormData] = useState<TodoItem>(
-    item || { id: Date.now(), name: "", content: "", isDone: false },
+    item || { id: Date.now(), name: "", content: "", status: TodoStatus.Todo },
   );
 
   function setValue(
@@ -21,7 +21,12 @@ export function TodoForm({ item, onSubmit }: Props) {
     onSubmit({ ...formData, id: Date.now() });
 
     //clear form;
-    setFormData({ id: Date.now(), name: "", content: "", isDone: false });
+    setFormData({
+      id: Date.now(),
+      name: "",
+      content: "",
+      status: TodoStatus.Todo,
+    });
   }
 
   return (
