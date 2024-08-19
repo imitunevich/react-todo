@@ -20,7 +20,7 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
     }
     updateItem({
       ...item,
-      status: e.target.checked ? TodoStatus.Done : TodoStatus.Todo,
+      status: updatedStatus,
     });
   }
 
@@ -32,7 +32,7 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
   }
   return (
     <div
-      className={`card ${item.status === TodoStatus.Done ? s["is-done"] : ""}  ${item.status === TodoStatus.OnHold && s["on-hold"]}`}
+      className={`card ${item.status === TodoStatus.Done ? s["is-done"] : ""}  ${item.status === TodoStatus.OnHold ? s["on-hold"] : ""}`}
     >
       <div className="card-header d-flex flex-row justify-content-between">
         <span>Todo item</span>
