@@ -6,7 +6,7 @@ export interface TodoItem {
 }
 
 export enum TodoStatus {
-  Todo,
-  Done,
-  OnHold,
+  Todo = "Todo",
+  Done = "Done",
+  OnHold = "OnHold",
 }

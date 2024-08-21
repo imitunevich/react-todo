@@ -1,8 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { TodoItem, TodoStatus } from "../../todo-types";
 import DeleteIcon from "../../assets/x-lg.svg?react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import s from "./style.module.scss";
+import { Modal } from "../Modal/Modal";
 
 type Props = {
   item: TodoItem;
@@ -11,23 +12,46 @@ type Props = {
 };
 
 export function TodoCard({ item, onDelete, updateItem }: Props) {
+  const [isStatusModalVisible, setIsStatusModalVisible] = useState(false);
+  const [tempStatus, setTempStatus] = useState(item.status);
+
   function setDone(e: ChangeEvent<HTMLInputElement>) {
     const updatedStatus = e.target.checked ? TodoStatus.Done : TodoStatus.Todo;
+    setTempStatus(updatedStatus);
+
     if (updatedStatus === TodoStatus.Todo) {
-      if (!confirm("Are you sure you want to mark this as todo?")) {
-        return;
-      }
+      setIsStatusModalVisible(true);
+      return;
     }
+
     updateItem({
       ...item,
       status: updatedStatus,
     });
   }
 
-  function setOnHold(e: ChangeEvent<HTMLInputElement>) {
+  function onConfirm() {
+    setIsStatusModalVisible(false);
     updateItem({
       ...item,
-      status: e.target.checked ? TodoStatus.OnHold : TodoStatus.Todo,
+      status: tempStatus,
+    });
+  }
+
+  function onReject() {
+    setIsStatusModalVisible(false);
+    setTempStatus(item.status);
+  }
+
+  function setOnHold(e: ChangeEvent<HTMLInputElement>) {
+    const updatedStatus = e.target.checked
+      ? TodoStatus.OnHold
+      : TodoStatus.Todo;
+    setTempStatus(updatedStatus);
+
+    updateItem({
+      ...item,
+      status: updatedStatus,
     });
   }
   return (
@@ -74,6 +98,15 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
           </label>
         </div>
       </div>
+      {isStatusModalVisible && (
+        <Modal
+          modalId={"doneModal"}
+          title={"Confirmation modal"}
+          message="Are you sure you want to mark this as todo?"
+          onConfirm={onConfirm}
+          onReject={onReject}
+        />
+      )}
     </div>
   );
 }

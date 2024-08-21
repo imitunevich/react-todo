@@ -3,10 +3,20 @@ import { TodoForm } from "./components/TodoForm/TodoForm";
 import { TodoList } from "./components/TodoList/TodoList";
 import { useState } from "react";
 import { INIT_TODO_LIST } from "./utils/constants";
-import { TodoItem } from "./todo-types";
+import { TodoItem, TodoStatus } from "./todo-types";
+import { SearchBar } from "./components/SearchBar/SearchBar";
+import { FilterBar } from "./components/FilterBar/FilterBar";
 
 function App() {
   const [todoList, setTodoList] = useState<TodoItem[]>(INIT_TODO_LIST);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
+  const filteredTodos: TodoItem[] = todoList.filter(
+    (item: TodoItem) =>
+      item.name.indexOf(searchTerm.trim().toLowerCase()) !== -1 &&
+      (statusFilter === "" || item.status === statusFilter),
+  );
 
   function addItem(item: TodoItem): void {
     setTodoList([...todoList, item]);
@@ -30,8 +40,21 @@ function App() {
           <TodoForm onSubmit={addItem} />
         </div>
 
+        <div className={"mb-2"}>
+          <SearchBar
+            updateSearchTerm={setSearchTerm}
+            placeholder={"Search by name"}
+          />
+        </div>
+
+        <div className={"mb-5"}>
+          <FilterBar
+            options={Object.values(TodoStatus)}
+            updateFilter={setStatusFilter}
+          />
+        </div>
         <TodoList
-          todoList={todoList}
+          todoList={filteredTodos}
           onDelete={deleteItem}
           updateItem={updateItem}
         />

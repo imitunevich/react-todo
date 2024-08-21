@@ -1,5 +1,6 @@
 import { TodoItem, TodoStatus } from "../../todo-types";
-import { ChangeEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 type Props = {
   item?: TodoItem;
@@ -7,58 +8,62 @@ type Props = {
 };
 
 export function TodoForm({ item, onSubmit }: Props) {
-  const [formData, setFormData] = useState<TodoItem>(
-    item || { id: Date.now(), name: "", content: "", status: TodoStatus.Todo },
-  );
-
-  function setValue(
-    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ): void {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  function submitForm() {
-    onSubmit({ ...formData, id: Date.now() });
-
-    //clear form;
-    setFormData({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<TodoItem>({
+    defaultValues: item || {
       id: Date.now(),
       name: "",
       content: "",
       status: TodoStatus.Todo,
-    });
-  }
+    },
+  });
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful]);
+
+  const submitForm = handleSubmit((formData) =>
+    onSubmit({ ...formData, id: Date.now() }),
+  );
 
   return (
     <div className={"container"}>
-      <div className={"row"}>
-        <h2>Add Todo here:</h2>
+      <form onSubmit={submitForm}>
+        <div className={"row"}>
+          <h2>Add Todo here:</h2>
 
-        <div className={"mb-2"}>
-          <label>Name:</label>
-          <input
-            className={"form-control"}
-            type={"text"}
-            name={"name"}
-            value={formData.name}
-            onChange={setValue}
-          />
+          <div className={"mb-2"}>
+            <label>Name:</label>
+            <input
+              className={"form-control"}
+              type={"text"}
+              {...register("name", { required: true })}
+            />
+            {errors.name?.type === "required" && (
+              <p role="alert">Name is required</p>
+            )}
+          </div>
+
+          <div className={"mb-2"}>
+            <label>Content:</label>
+            <textarea
+              className={"form-control"}
+              {...register("content", { required: true })}
+            ></textarea>
+            {errors.content?.type === "required" && (
+              <p role="alert">Content is required</p>
+            )}
+          </div>
+
+          <button className={"btn btn-primary w-auto ms-2"} type="submit">
+            Submit
+          </button>
         </div>
-
-        <div className={"mb-2"}>
-          <label>Content:</label>
-          <textarea
-            className={"form-control"}
-            name={"content"}
-            value={formData.content}
-            onChange={setValue}
-          ></textarea>
-        </div>
-
-        <button className={"btn btn-primary w-auto ms-2"} onClick={submitForm}>
-          Submit
-        </button>
-      </div>
+      </form>
     </div>
   );
 }
