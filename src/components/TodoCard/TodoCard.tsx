@@ -13,11 +13,9 @@ type Props = {
 
 export function TodoCard({ item, onDelete, updateItem }: Props) {
   const [isStatusModalVisible, setIsStatusModalVisible] = useState(false);
-  const [tempStatus, setTempStatus] = useState(item.status);
 
   function setDone(e: ChangeEvent<HTMLInputElement>) {
     const updatedStatus = e.target.checked ? TodoStatus.Done : TodoStatus.Todo;
-    setTempStatus(updatedStatus);
 
     if (updatedStatus === TodoStatus.Todo) {
       setIsStatusModalVisible(true);
@@ -26,7 +24,7 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
 
     updateItem({
       ...item,
-      status: updatedStatus,
+      status: TodoStatus.Done,
     });
   }
 
@@ -34,24 +32,18 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
     setIsStatusModalVisible(false);
     updateItem({
       ...item,
-      status: tempStatus,
+      status: TodoStatus.Todo,
     });
   }
 
   function onReject() {
     setIsStatusModalVisible(false);
-    setTempStatus(item.status);
   }
 
   function setOnHold(e: ChangeEvent<HTMLInputElement>) {
-    const updatedStatus = e.target.checked
-      ? TodoStatus.OnHold
-      : TodoStatus.Todo;
-    setTempStatus(updatedStatus);
-
     updateItem({
       ...item,
-      status: updatedStatus,
+      status: e.target.checked ? TodoStatus.OnHold : TodoStatus.Todo,
     });
   }
   return (
@@ -77,9 +69,9 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
             checked={item.status === TodoStatus.Done}
             disabled={item.status === TodoStatus.OnHold}
             onChange={setDone}
-            id="isDone"
+            id={`isDone_${item.id}`}
           />
-          <label className="form-check-label" htmlFor="isDone">
+          <label className="form-check-label" htmlFor={`isDone_${item.id}`}>
             Done
           </label>
         </div>
@@ -91,9 +83,9 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
             checked={item.status === TodoStatus.OnHold}
             disabled={item.status === TodoStatus.Done}
             onChange={setOnHold}
-            id="onHold"
+            id={`onHold_${item.id}`}
           />
-          <label className="form-check-label" htmlFor="onHold">
+          <label className="form-check-label" htmlFor={`onHold_${item.id}`}>
             onHold
           </label>
         </div>

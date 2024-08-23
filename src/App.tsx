@@ -53,11 +53,15 @@ function App() {
             updateFilter={setStatusFilter}
           />
         </div>
-        <TodoList
-          todoList={filteredTodos}
-          onDelete={deleteItem}
-          updateItem={updateItem}
-        />
+        {filteredTodos.length ? (
+          <TodoList
+            todoList={filteredTodos}
+            onDelete={deleteItem}
+            updateItem={updateItem}
+          />
+        ) : (
+          <p className={"h3"}>No todos found</p>
+        )}
       </div>
     </section>
   );
