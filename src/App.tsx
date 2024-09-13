@@ -6,6 +6,7 @@ import { INIT_TODO_LIST } from "./utils/constants";
 import { TodoItem, TodoStatus } from "./todo-types";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { FilterBar } from "./components/FilterBar/FilterBar";
+import { Link } from "react-router-dom";
 
 function App() {
   const [todoList, setTodoList] = useState<TodoItem[]>(INIT_TODO_LIST);
@@ -36,9 +37,12 @@ function App() {
   return (
     <section>
       <div className="container">
-        <div className={"mb-5"}>
+        <Link to={"/todos/new"} className={"btn btn-primary mb-5 mt-2"}>
+          Add new
+        </Link>
+        {/*<div className={"mb-5"}>
           <TodoForm onSubmit={addItem} />
-        </div>
+        </div>*/}
 
         <div className={"mb-2"}>
           <SearchBar

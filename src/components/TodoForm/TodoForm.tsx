@@ -34,8 +34,6 @@ export function TodoForm({ item, onSubmit }: Props) {
     <div className={"container"}>
       <form onSubmit={submitForm}>
         <div className={"row"}>
-          <h2>Add Todo here:</h2>
-
           <div className={"mb-2"}>
             <label>Name:</label>
             <input
