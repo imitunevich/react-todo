@@ -3,7 +3,7 @@ import { TodoCard } from "../TodoCard/TodoCard";
 
 type Props = {
   todoList: TodoItem[];
-  onDelete: (todoId: number) => void;
+  onDelete: (todoId: string) => void;
   updateItem: (item: TodoItem) => void;
 };
 

@@ -1,6 +1,7 @@
 import { TodoItem, TodoStatus } from "../../todo-types";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   item?: TodoItem;
@@ -15,20 +16,22 @@ export function TodoForm({ item, onSubmit }: Props) {
     reset,
   } = useForm<TodoItem>({
     defaultValues: item || {
-      id: Date.now(),
       name: "",
       content: "",
       status: TodoStatus.Todo,
     },
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     reset();
   }, [isSubmitSuccessful]);
 
-  const submitForm = handleSubmit((formData) =>
-    onSubmit({ ...formData, id: Date.now() }),
-  );
+  const submitForm = handleSubmit(async (formData) => {
+    await onSubmit({ ...formData });
+    navigate("/todos");
+  });
 
   return (
     <div className={"container"}>

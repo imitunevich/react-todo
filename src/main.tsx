@@ -18,11 +18,11 @@ declare global {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <App />,
   },
   {
     path: "/todos",
-    element: <App />,
+    element: <Root />,
   },
   {
     path: "/todos/new",
