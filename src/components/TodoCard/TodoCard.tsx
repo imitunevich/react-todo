@@ -1,17 +1,18 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { TodoItem, TodoStatus } from "../../todo-types";
+import { TodoCategory, TodoItem, TodoStatus } from "../../todo-types";
 import DeleteIcon from "../../assets/x-lg.svg?react";
 import { ChangeEvent, useState } from "react";
 import s from "./style.module.scss";
-import { Modal } from "../Modal/Modal";
+import { ConfirmationModal } from "../ConfirmationModal/ConfirmationModal";
 
 type Props = {
   item: TodoItem;
+  category: TodoCategory;
   onDelete: () => void;
   updateItem: (item: TodoItem) => void;
 };
 
-export function TodoCard({ item, onDelete, updateItem }: Props) {
+export function TodoCard({ item, category, onDelete, updateItem }: Props) {
   const [isStatusModalVisible, setIsStatusModalVisible] = useState(false);
 
   function setDone(e: ChangeEvent<HTMLInputElement>) {
@@ -58,7 +59,8 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
       </div>
       <div className="card-body">
         <h5 className="card-title">{item.name}</h5>
-        <p className="card-text">{item.content}</p>
+        <p className="card-text mb-1">{item.content}</p>
+        <p className="card-text">{category && category.name}</p>
       </div>
       <div className="card-footer">
         <div className="form-check form-switch">
@@ -91,12 +93,13 @@ export function TodoCard({ item, onDelete, updateItem }: Props) {
         </div>
       </div>
       {isStatusModalVisible && (
-        <Modal
+        <ConfirmationModal
           modalId={"doneModal"}
           title={"Confirmation modal"}
           message="Are you sure you want to mark this as todo?"
           onConfirm={onConfirm}
           onReject={onReject}
+          setModalVisible={setIsStatusModalVisible}
         />
       )}
     </div>

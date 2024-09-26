@@ -1,14 +1,20 @@
-import { useEffect } from "react";
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { Modal as BootstrapModal } from "bootstrap";
 
 type Props = {
+  children: React.ReactNode;
   modalId: string;
   title: string;
-  message: string;
-  onConfirm: () => void;
-  onReject: () => void;
+  setModalVisible: (status: boolean) => void;
 };
-export function Modal({ modalId, title, message, onConfirm, onReject }: Props) {
+
+export type ModalHandle = {
+  hideModal: () => void;
+};
+export const Modal = forwardRef<ModalHandle, Props>(function Modal(
+  { children, modalId, title, setModalVisible }: Props,
+  ref,
+) {
   let modal: BootstrapModal;
 
   useEffect(() => {
@@ -18,23 +24,25 @@ export function Modal({ modalId, title, message, onConfirm, onReject }: Props) {
     modal.show();
 
     return () => {
-      hideModal();
+      modal && modal.hide();
+    };
+  }, []);
+
+  useImperativeHandle(ref, () => {
+    return {
+      hideModal() {
+        hideModal();
+      },
     };
   }, []);
 
   function hideModal() {
-    modal && modal.hide();
+    if (modal) {
+      modal.hide();
+      setModalVisible(false);
+    }
   }
 
-  function onCloseClick() {
-    onReject();
-    hideModal();
-  }
-
-  function onOkClick() {
-    onConfirm();
-    hideModal();
-  }
   return (
     <div id={modalId} className="modal" tabIndex={-1}>
       <div className="modal-dialog">
@@ -46,31 +54,12 @@ export function Modal({ modalId, title, message, onConfirm, onReject }: Props) {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={onCloseClick}
+              onClick={hideModal}
             ></button>
           </div>
-          <div className="modal-body">
-            <p>{message}</p>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-              onClick={onCloseClick}
-            >
-              No
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={onOkClick}
-            >
-              Yes
-            </button>
-          </div>
+          {children}
         </div>
       </div>
     </div>
   );
-}
+});

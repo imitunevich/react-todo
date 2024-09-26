@@ -4,67 +4,133 @@
       "id": "1",
       "name": "item 1",
       "content": "content 1",
-      "status": "Todo"
+      "status": "Done",
+      "categoryId": "1"
     },
     {
       "id": "2",
       "name": "item 2",
       "content": "content 2",
-      "status": "Done"
+      "status": "Done",
+      "categoryId": "1"
     },
     {
       "id": "3",
       "name": "item 3",
       "content": "content 3",
-      "status": "Todo"
+      "status": "Done",
+      "categoryId": "2"
     },
     {
       "id": "4",
       "name": "item 4",
       "content": "content 4",
-      "status": "Done"
+      "status": "Done",
+      "categoryId": "1"
     },
     {
       "id": "5",
       "name": "item 5",
       "content": "content 5",
-      "status": "Done"
+      "status": "Done",
+      "categoryId": "2"
     },
     {
       "id": "6",
       "name": "item 6",
       "content": "content 6",
-      "status": "onHold"
+      "status": "onHold",
+      "categoryId": "1"
     },
     {
       "id": "7",
       "name": "item 7",
       "content": "content 7",
-      "status": "Todo"
+      "status": "Todo",
+      "categoryId": "1"
     },
     {
       "id": "8",
       "name": "item 8",
       "content": "content 8",
-      "status": "Done"
+      "status": "Done",
+      "categoryId": "2"
     },
     {
       "id": "9",
       "name": "item 9",
       "content": "content 9",
-      "status": "Todo"
+      "status": "Todo",
+      "categoryId": "1"
     },
     {
       "id": "10",
       "name": "item 10",
       "content": "content 10",
-      "status": "Done"
+      "status": "Done",
+      "categoryId": "1"
     },
     {
       "id": "6bdf",
       "name": "Ira",
       "content": "Ira",
-      "status": "OnHold"
+      "status": "OnHold",
+      "categoryId": "2"
+    },
+    {
+      "id": "becd",
+      "name": "111",
+      "content": "111",
+      "status": "Todo",
+      "categoryId": "2"
+    },
+    {
+      "id": "0f59",
+      "name": "222",
+      "content": "222",
+      "status": "Todo",
+      "categoryId": "2"
+    },
+    {
+      "id": "2ab4",
+      "name": "fdgdg",
+      "content": "gdgdg",
+      "status": "Done",
+      "categoryId": "6df5"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "category 1"
+    },
+    {
+      "id": "2",
+      "name": "category 2"
+    },
+    {
+      "id": "6df5",
+      "name": "New category"
+    },
+    {
+      "id": "0385",
+      "name": "New category"
+    },
+    {
+      "id": "1727358075103",
+      "name": "New category"
+    },
+    {
+      "id": "3d19",
+      "name": "1111"
+    },
+    {
+      "id": "e1c5",
+      "name": "222"
+    },
+    {
+      "id": "0072",
+      "name": "rwrwrwr"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { TodoItem } from "../todo-types";
+import { TodoCategory, TodoItem } from "../todo-types";
 
 export class TodoApi {
   static async getTodos(): Promise<TodoItem[]> {
@@ -22,6 +22,29 @@ export class TodoApi {
 
   static async deleteTodo(id: string): Promise<TodoItem> {
     return fetch(`http://localhost:2000/todos/${id}`, {
+      method: "DELETE",
+    }).then((res) => res.json());
+  }
+
+  static async getCategories(): Promise<TodoCategory[]> {
+    return fetch("http://localhost:2000/categories").then((res) => res.json());
+  }
+
+  static async getCategoryById(id: string): Promise<TodoCategory> {
+    return fetch(`http://localhost:2000/categories/${id}`).then((res) =>
+      res.json(),
+    );
+  }
+
+  static async addCategory(category: TodoCategory): Promise<TodoCategory> {
+    return fetch("http://localhost:2000/categories", {
+      method: "POST",
+      body: JSON.stringify({ ...category }),
+    }).then((res) => res.json());
+  }
+
+  static async deleteCategory(id: string): Promise<TodoCategory> {
+    return fetch(`http://localhost:2000/categories/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
   }

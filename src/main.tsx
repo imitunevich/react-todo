@@ -8,6 +8,8 @@ import * as bootstrap from "bootstrap"; // Import all of Bootstrap's JS
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./pages/Root/Root";
 import { TodoNew } from "./pages/TodoNew/TodoNew";
+import { CategoryResultPage } from "./pages/categoryResultPage/CategoryResultPage";
+import { TodoApi } from "./api/TodoApi";
 
 declare global {
   interface Window {
@@ -27,6 +29,20 @@ const router = createBrowserRouter([
   {
     path: "/todos/new",
     element: <TodoNew />,
+  },
+  {
+    path: "/category/:categoryId",
+    element: <CategoryResultPage />,
+    loader: async ({ params }) => {
+      try {
+        const category = await TodoApi.getCategoryById(
+          params.categoryId as string,
+        );
+        return category;
+      } catch (error) {
+        return null;
+      }
+    },
   },
 ]);
 
